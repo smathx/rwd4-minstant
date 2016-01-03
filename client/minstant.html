@@ -1,5 +1,5 @@
 <head>
-  <title>minstant</title>
+	<title>minstant</title>
 </head>
 
 <body>
@@ -8,26 +8,26 @@
 <!-- this is the main template used by iron:router to build the page -->
 <template name="ApplicationLayout">
 	{{> yield "header"}}
-	
+
 	<div class="container">
-	{{> yield "main"}}
+		{{> yield "main"}}
 	</div>
 </template>
 
 <!-- top level template for the nav bar -->
 <template name="navbar">
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="/">
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="/">
         Minstant!
       </a>
-    </div>
-    <div class="nav navbar-nav">
-    {{> loginButtons}}
-</div>
-  </div>
-</nav>
+			</div>
+			<div class="nav navbar-nav">
+				{{> loginButtons}}
+			</div>
+		</div>
+	</nav>
 </template>
 
 <!-- Top level template for the lobby page -->
@@ -39,28 +39,25 @@
 <template name="available_user_list">
 	<h2>Choose someone to chat with:</h2>
 	<div class="row">
-	{{#each users}}
-	{{> available_user}}
-	{{/each}}
-</div>
+		{{#each users}} {{> available_user}} {{/each}}
+	</div>
 </template>
 
 <!-- display an individual user -->
 <template name="available_user">
 	<div class="col-md-2">
 		<div class="user_avatar">
-			{{#if isMyUser _id}} 
+			{{#if isMyUser _id}}
 			<div class="bg-success">{{getUsername _id}} (YOU)
 				<br/>
-				<img src="{{profile.avatar}}" class="avatar_img">			
+				<img src="{{profile.avatar}}" class="avatar_img">
 			</div>
 			{{else}}
 			<a href="/chat/{{_id}}">
 				{{getUsername _id}}
 				<br/>
 				<img src="{{profile.avatar}}" class="avatar_img">
-			</a>
-			{{/if}}
+			</a> {{/if}}
 		</div>
 	</div>
 </template>
@@ -72,18 +69,16 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div class="well well-lg">
-			{{#each messages}}
-			{{> chat_message}}
-			{{/each}}
-			</div>	
+				{{#each messages}} {{> chat_message}} {{/each}}
+			</div>
 		</div>
 	</div>
-    <div class="row">
+	<div class="row">
 		<div class="col-md-12">
 			<form class="js-send-chat">
-			<input class="input" type="text" name="chat" placeholder="type a message here...">
-			<button class="btn btn-default">send</button>
-		</form>
+				<input class="input" type="text" name="chat" placeholder="type a message here...">
+				<button class="btn btn-default">send</button>
+			</form>
 		</div>
 	</div>
 </template>
@@ -93,6 +88,3 @@
 	someone said: {{text}}
 	<br>
 </template>
-
-
-
