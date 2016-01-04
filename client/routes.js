@@ -7,10 +7,6 @@ Router.configure({
 
 // specify the top level route, the page users see when they arrive at the site
 Router.route('/', function () {
-  console.log("rendering root /");
-  this.render("navbar", {
-    to: "header"
-  });
   this.render("lobby_page", {
     to: "main"
   });
@@ -32,8 +28,10 @@ Router.route('/chat/:_id', function () {
       user1Id: otherUserId
     }]
   };
+  
   var chatId;
   var chat = Chats.findOne(filter);
+  
   if (!chat) { // no chat matching the filter - need to insert a new one
     chatId = Chats.insert({
       user1Id: Meteor.userId(),
@@ -46,9 +44,6 @@ Router.route('/chat/:_id', function () {
   if (chatId) { // looking good, save the id to the session
     Session.set("chatId", chatId);
   }
-  this.render("navbar", {
-    to: "header"
-  });
   this.render("chat_page", {
     to: "main"
   });

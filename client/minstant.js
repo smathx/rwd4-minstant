@@ -1,9 +1,8 @@
-///
-// helper functions 
-/// 
+/* global Chats */
+
 Template.available_user_list.helpers({
   users: function () {
-    return Meteor.users.find();
+    return Meteor.users.find({}, { sort: [ 'username', 'a' ] });
   }
 });
 
@@ -12,15 +11,10 @@ Template.available_user.helpers({
     var user = Meteor.users.findOne({
       _id: userId
     });
-    return user.profile.username;
+    return user.username;
   },
   isMyUser: function (userId) {
-    if (userId == Meteor.userId()) {
-      return true;
-    }
-    else {
-      return false;
-    }
+    return userId == Meteor.userId();
   }
 });
 
@@ -33,8 +27,7 @@ Template.chat_page.helpers({
   },
   other_user: function () {
     return '';
-  },
-
+  }
 });
 
 Template.chat_page.events({
@@ -56,7 +49,8 @@ Template.chat_page.events({
       // (i.e. the user) into the database?? certainly not. 
       // push adds the message to the end of the array
       msgs.push({
-        text: event.target.chat.value
+        text: event.target.chat.value,
+        id: Session.get('chatId')
       });
       // reset the form
       event.target.chat.value = '';

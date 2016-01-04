@@ -1,0 +1,5 @@
+// User accounts stuff
+
+Accounts.ui.config({
+  passwordSignupFields: 'USERNAME_AND_OPTIONAL_EMAIL'
+});

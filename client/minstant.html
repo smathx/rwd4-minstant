@@ -1,63 +1,55 @@
 <head>
-	<title>minstant</title>
+	<title>Minstant</title>
+
+  <!-- iOS and Android 2.1+ -->
+  <link rel="apple-touch-icon-precomposed" href="/apple-touch-icon-precomposed.png">
+  <!-- Firefox, Chrome, Safari, IE 11+ and Opera -->
+  <link rel="icon" href="/favicon-194x194.png">
+  <!-- Generic -->
+  <link rel="icon" sizes="16x16 32x32 48x48" href="/favicon.ico?">
 </head>
 
 <body>
 </body>
 
-<!-- this is the main template used by iron:router to build the page -->
 <template name="ApplicationLayout">
-	{{> yield "header"}}
-
-	<div class="container">
-		{{> yield "main"}}
-	</div>
-</template>
-
-<!-- top level template for the nav bar -->
-<template name="navbar">
-	<nav class="navbar navbar-default">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="/">
-        Minstant!
-      </a>
-			</div>
-			<div class="nav navbar-nav">
-				{{> loginButtons}}
-			</div>
-		</div>
-	</nav>
+	{{> header}}
+	{{> yield "main"}}
 </template>
 
 <!-- Top level template for the lobby page -->
 <template name="lobby_page">
-	{{> available_user_list}}
+	<div class="container">
+		{{> available_user_list}}
+	</div>
 </template>
 
 <!-- display a list of users -->
 <template name="available_user_list">
 	<h2>Choose someone to chat with:</h2>
 	<div class="row">
-		{{#each users}} {{> available_user}} {{/each}}
+		{{#each users}} 
+			{{> available_user}} 
+		{{/each}}
 	</div>
 </template>
 
 <!-- display an individual user -->
 <template name="available_user">
-	<div class="col-md-2">
+	<div class="col-xs-4 col-sm-3 col-md-2">
 		<div class="user_avatar">
 			{{#if isMyUser _id}}
-			<div class="bg-success">{{getUsername _id}} (YOU)
-				<br/>
-				<img src="{{profile.avatar}}" class="avatar_img">
-			</div>
+				<div class="bg-success">{{getUsername _id}} (YOU)
+					<br>
+					<img src="{{profile.avatar}}" class="avatar_img">
+				</div>
 			{{else}}
-			<a href="/chat/{{_id}}">
-				{{getUsername _id}}
-				<br/>
-				<img src="{{profile.avatar}}" class="avatar_img">
-			</a> {{/if}}
+				<a href="/chat/{{_id}}">
+					{{getUsername _id}}
+					<br>
+					<img src="{{profile.avatar}}" class="avatar_img">
+				</a> 
+			{{/if}}
 		</div>
 	</div>
 </template>
@@ -65,11 +57,29 @@
 
 <!-- Top level template for the chat page -->
 <template name="chat_page">
+	<div class="container">
 	<h2>Type in the box below to send a message!</h2>
 	<div class="row">
 		<div class="col-md-12">
 			<div class="well well-lg">
-				{{#each messages}} {{> chat_message}} {{/each}}
+				<ul class="media_list">
+				{{#each messages}} 
+				
+          <li class="media">
+            <div class="media-left">
+              <a href="{{link}}">
+                <img class="media-object img-thumbnail" 
+                  src="{{image}}">
+              </a>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">{{title}}</h4>
+              <p>{{text}} - {{id}}</p>
+            </div>
+          </li>
+
+				{{/each}}
+				</ul>
 			</div>
 		</div>
 	</div>
@@ -80,6 +90,7 @@
 				<button class="btn btn-default">send</button>
 			</form>
 		</div>
+	</div>
 	</div>
 </template>
 

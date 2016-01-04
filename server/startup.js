@@ -1,28 +1,36 @@
-// start up script that creates some users for testing
-// users have the username 'user1@test.com' .. 'user8@test.com'
-// and the password test123 
+/* global Chats */
 
 Meteor.startup(function () {
+
+  var cleanDB = true;
+
+  // Clean out DB for testing - quicker than reset.
+
+  if (cleanDB) {
+    console.log('Scrubbing database...');
+    Meteor.users.remove({});
+    Chats.remove({});
+  }
+
   if (!Meteor.users.findOne()) {
-    for (var i = 1; i < 9; i++) {
-      var email = 'user' + i + '@test.com';
-      var username = 'user' + i;
-      var avatar = 'ava' + i + '.png';
+    for (var id = 1; id <= 8; id += 1) {
+      var username = 'user' + id;
+      var email = 'user' + id + '@test.com';
+      var password = 'test123';
+      var avatar = 'ava' + id + '.png';
+      var name = 'User ' + id;
 
-      console.log('creating a user with password "test123" and username/email: ' + email);
+      console.log('Creating user/password ' + username + '/test123');
 
-      Meteor.users.insert({
+      var password = 'test123';
+
+      Accounts.createUser({
+        username: username,
+        email: email,
+        password: password,
         profile: {
-          username: username,
+          name: name,
           avatar: avatar
-        },
-        emails: [{
-          address: email
-        }],
-        services: {
-          password: {
-            'bcrypt': '$2a$10$I3erQ084OiyILTv8ybtQ4ON6wusgPbMZ6.P33zzSDei.BbDL.Q4EO'
-          }
         }
       });
     }

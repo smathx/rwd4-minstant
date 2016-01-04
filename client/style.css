@@ -1,0 +1,20 @@
+/* CSS declarations go here */
+
+/* Compensate for fixed navbar at top of page */
+
+body {
+  padding-top: 70px;
+}
+
+.user_avatar {
+	min-height: 100px;
+	text-align: center;
+}
+
+.avatar_img {
+	height: 75px;
+}
+
+.img_thumbnail {
+	width: 25px;
+}
