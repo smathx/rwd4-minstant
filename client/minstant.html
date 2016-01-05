@@ -1,12 +1,12 @@
 <head>
-	<title>Minstant</title>
+	<title>Minstant!</title>
 
   <!-- iOS and Android 2.1+ -->
   <link rel="apple-touch-icon-precomposed" href="/apple-touch-icon-precomposed.png">
   <!-- Firefox, Chrome, Safari, IE 11+ and Opera -->
   <link rel="icon" href="/android-chrome-192x192.png">
   <!-- Generic -->
-  <link rel="icon" sizes="16x16 32x32 48x48" href="/favicon.ico?">
+  <link rel="icon" sizes="16x16 32x32 48x48" href="/favicon.ico">
 </head>
 
 <body>
@@ -15,83 +15,4 @@
 <template name="ApplicationLayout">
 	{{> header}}
 	{{> yield "main"}}
-</template>
-
-<template name="lobby_page">
-	<div class="container">
-		{{> available_user_list}}
-	</div>
-</template>
-
-<template name="available_user_list">
-	<h2>Choose someone to chat with:</h2>
-	<div class="row">
-		{{#each users}} 
-			{{> available_user}} 
-		{{/each}}
-	</div>
-</template>
-
-<template name="available_user">
-	<div class="col-xs-4 col-sm-3 col-md-2">
-		<div class="user_avatar">
-			{{#if isMyUser _id}}
-				<div class="bg-success">{{getUsername _id}} (YOU)
-					<br>
-					<img src="{{profile.avatar}}" class="avatar_img">
-				</div>
-			{{else}}
-				<a href="/chat/{{_id}}">
-					{{getUsername _id}}
-					<br>
-					<img src="{{profile.avatar}}" class="avatar_img">
-				</a> 
-			{{/if}}
-		</div>
-	</div>
-</template>
-
-<template name="chat_page">
-	<div class="container">
-		
-		<h3>Chat to: {{ otherUser.username }}</h3>
-		<div class="row">
-			<div class="col-xs-12">
-				<form class="js-send-chat">
-
-          <div class="form-group">
-            <textarea id="chat" class="form-control" rows="3" required 
-              placeholder="Type your message here&hellip;"></textarea>
-          </div>
-          <div class="form-group">
-		        <button class="btn btn-primary">Send</button>
-					</div>
-					
-				</form>
-			</div>
-		</div>
-		
-		<div class="row">
-			<div class="col-xs-12">
-				<div class="well well-lg">
-					<ul class="list-unstyled message-list">
-						{{#each messages}} 
-							{{> chat_message}}
-						{{/each}}
-					</ul>
-				</div>
-			</div>
-		</div>
-		
-	</div>
-</template>
-
-<template name="chat_message">
-  <li>
-  	<p>
-    	<img class="avatar-tiny" src="{{ getAvatar author }}">
-    	{{getUsername author}} says: 
-    	{{{parseEmoticons text}}}
-    </p>
-  </li>
 </template>

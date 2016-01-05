@@ -1,5 +1,31 @@
 /* global Chats */
 
+Template.welcome.helpers({
+  statusMessage: function () {
+    
+    function one(num, singular, plural) {
+      if (!plural)
+        plural = singular + 's';
+        
+      if (num == 0)
+        num = 'no';
+        
+      return num + ' ' + ((num == 1) ? singular: plural);
+    }
+    
+    function are(num) {
+      return (num == 1) ? 'is': 'are';
+    }
+    
+    var user_count = Meteor.users.find().count();   
+    var chat_count = Chats.find().count();   
+    
+    return 'There ' + are(user_count) + ' currently ' 
+      + one(user_count, 'user')
+      + ' and ' + one(chat_count, 'conversation') + '.';
+  }
+});
+
 Template.available_user_list.helpers({
   users: function () {
     return Meteor.users.find({}, { sort: [ 'username', 'asc' ] });
@@ -44,7 +70,7 @@ Template.chat_page.events({
 
       event.target.chat.value = '';
 
-      Chats.update(chat._id, chat);
+      Chats.update(chat._id, { $set: chat });
     }
   }
 });

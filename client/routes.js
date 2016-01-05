@@ -5,12 +5,17 @@ Router.configure({
 });
 
 Router.route('/', function () {
-  this.render("lobby_page", {
-    to: "main"
+  this.render('home', {
+    to: 'main'
   });
 });
 
 Router.route('/chat/:_id', function () {
+  if (!Meteor.userId()) {
+    this.redirect('/');
+    return;
+  }
+  
   var otherUserId = this.params._id;
   
   var filter = {
