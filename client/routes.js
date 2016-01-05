@@ -1,50 +1,56 @@
 /* global Router, Chats */
 
-// set up the main template the the router will use to build pages
 Router.configure({
   layoutTemplate: 'ApplicationLayout'
 });
 
-// specify the top level route, the page users see when they arrive at the site
 Router.route('/', function () {
   this.render("lobby_page", {
     to: "main"
   });
 });
 
-// specify a route that allows the current user to chat to another users
 Router.route('/chat/:_id', function () {
-  // the user they want to chat to has id equal to 
-  // the id sent in after /chat/... 
   var otherUserId = this.params._id;
-  // find a chat that has two users that match current user id
-  // and the requested user id
+  
   var filter = {
     $or: [{
       user1Id: Meteor.userId(),
       user2Id: otherUserId
     }, {
-      user2Id: Meteor.userId(),
-      user1Id: otherUserId
+      user1Id: otherUserId,
+      user2Id: Meteor.userId()
     }]
   };
   
-  var chatId;
-  var chat = Chats.findOne(filter);
+  console.log(filter);
   
-  if (!chat) { // no chat matching the filter - need to insert a new one
+  var chatId;
+  var chat = Chats.findOne(filter, { sort: [ 'createdAt', 'desc' ]});
+  
+  if (!chat) { 
+    console.log("Creating new chat");
     chatId = Chats.insert({
       user1Id: Meteor.userId(),
-      user2Id: otherUserId
+      user2Id: otherUserId,
+      messages: [],
+      createdAt: new Date()
     });
   }
-  else { // there is a chat going already - use that. 
+  else { 
+    console.log("Updating old chat");
     chatId = chat._id;
   }
-  if (chatId) { // looking good, save the id to the session
-    Session.set("chatId", chatId);
+  
+  console.log(" chatId: " + chatId);
+  console.log("user1Id: " + Meteor.userId());
+  console.log("user2Id: " + otherUserId);
+  
+  if (chatId) {
+    Session.set('chatId', chatId);
   }
-  this.render("chat_page", {
-    to: "main"
+  
+  this.render('chat_page', {
+    to: 'main'
   });
 });

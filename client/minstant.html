@@ -4,7 +4,7 @@
   <!-- iOS and Android 2.1+ -->
   <link rel="apple-touch-icon-precomposed" href="/apple-touch-icon-precomposed.png">
   <!-- Firefox, Chrome, Safari, IE 11+ and Opera -->
-  <link rel="icon" href="/favicon-194x194.png">
+  <link rel="icon" href="/android-chrome-192x192.png">
   <!-- Generic -->
   <link rel="icon" sizes="16x16 32x32 48x48" href="/favicon.ico?">
 </head>
@@ -17,14 +17,12 @@
 	{{> yield "main"}}
 </template>
 
-<!-- Top level template for the lobby page -->
 <template name="lobby_page">
 	<div class="container">
 		{{> available_user_list}}
 	</div>
 </template>
 
-<!-- display a list of users -->
 <template name="available_user_list">
 	<h2>Choose someone to chat with:</h2>
 	<div class="row">
@@ -34,7 +32,6 @@
 	</div>
 </template>
 
-<!-- display an individual user -->
 <template name="available_user">
 	<div class="col-xs-4 col-sm-3 col-md-2">
 		<div class="user_avatar">
@@ -54,48 +51,47 @@
 	</div>
 </template>
 
-
-<!-- Top level template for the chat page -->
 <template name="chat_page">
 	<div class="container">
-	<h2>Type in the box below to send a message!</h2>
-	<div class="row">
-		<div class="col-md-12">
-			<div class="well well-lg">
-				<ul class="media_list">
-				{{#each messages}} 
-				
-          <li class="media">
-            <div class="media-left">
-              <a href="{{link}}">
-                <img class="media-object img-thumbnail" 
-                  src="{{image}}">
-              </a>
-            </div>
-            <div class="media-body">
-              <h4 class="media-heading">{{title}}</h4>
-              <p>{{text}} - {{id}}</p>
-            </div>
-          </li>
+		
+		<h3>Chat to: {{ otherUser.username }}</h3>
+		<div class="row">
+			<div class="col-xs-12">
+				<form class="js-send-chat">
 
-				{{/each}}
-				</ul>
+          <div class="form-group">
+            <textarea id="chat" class="form-control" rows="3" required 
+              placeholder="Type your message here&hellip;"></textarea>
+          </div>
+          <div class="form-group">
+		        <button class="btn btn-primary">Send</button>
+					</div>
+					
+				</form>
 			</div>
 		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-12">
-			<form class="js-send-chat">
-				<input class="input" type="text" name="chat" placeholder="type a message here...">
-				<button class="btn btn-default">send</button>
-			</form>
+		
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="well well-lg">
+					<ul class="list-unstyled message-list">
+						{{#each messages}} 
+							{{> chat_message}}
+						{{/each}}
+					</ul>
+				</div>
+			</div>
 		</div>
-	</div>
+		
 	</div>
 </template>
 
-<!-- simple template that displays a message -->
 <template name="chat_message">
-	someone said: {{text}}
-	<br>
+  <li>
+  	<p>
+    	<img class="avatar-tiny" src="{{ getAvatar author }}">
+    	{{getUsername author}} says: 
+    	{{{parseEmoticons text}}}
+    </p>
+  </li>
 </template>

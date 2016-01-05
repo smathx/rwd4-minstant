@@ -1,9 +1,10 @@
 /* CSS declarations go here */
 
+
 /* Compensate for fixed navbar at top of page */
 
 body {
-  padding-top: 70px;
+	padding-top: 70px;
 }
 
 .user_avatar {
@@ -15,6 +16,28 @@ body {
 	height: 75px;
 }
 
-.img_thumbnail {
-	width: 25px;
+.avatar-tiny {
+	border: 0;
+	padding: 0;
+	height: 2em;
+	vertical-align: middle;
+}
+
+.meteoremoticon {
+	margin-left: 0.1em;
+	margin-right: 0.1em;
+	border: 0;
+	padding: 0;
+	height: 1.2em;
+	vertical-align: middle;
+}
+
+/* Alternate message background colours. */
+
+.message-list li:nth-of-type(even) {
+	background: #D0FFD0;
+}
+
+.message-list li:nth-of-type(odd) {
+	background: #FFFFD0;
 }
