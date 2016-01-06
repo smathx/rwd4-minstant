@@ -7,6 +7,8 @@ body {
 	padding-top: 70px;
 }
 
+/* Image in navvar header. */
+
 .navbar-image {
 	max-height: 50px;
 	padding: 10px;
@@ -21,12 +23,16 @@ body {
 	height: 75px;
 }
 
+/* Avatars for messages are about twice normal text height. */
+
 .avatar-tiny {
 	border: 0;
 	padding: 0;
 	height: 2em;
 	vertical-align: middle;
 }
+
+/* Emoticons a bit bigger than standard text with space either side */
 
 .meteoremoticon {
 	margin-left: 0.1em;

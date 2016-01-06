@@ -11,10 +11,15 @@ Router.route('/', function () {
 });
 
 Router.route('/chat/:_id', function () {
+  
+  // Redirect to home page if not signed in.
+  
   if (!Meteor.userId()) {
     this.redirect('/');
     return;
   }
+  
+  // Find the most recent chat between the two users, regardless of order.
   
   var otherUserId = this.params._id;
   
@@ -28,10 +33,10 @@ Router.route('/chat/:_id', function () {
     }]
   };
   
-  console.log(filter);
-  
   var chatId;
   var chat = Chats.findOne(filter, { sort: [ 'createdAt', 'desc' ]});
+
+  // Create a new one or update an old one.
   
   if (!chat) { 
     console.log("Creating new chat");
@@ -47,15 +52,18 @@ Router.route('/chat/:_id', function () {
     chatId = chat._id;
   }
   
-  console.log(" chatId: " + chatId);
-  console.log("user1Id: " + Meteor.userId());
-  console.log("user2Id: " + otherUserId);
+  console.log(Chats.findOne({_id: chatId}));
+
+  // Save the current chat ID and render page. Otherwise go back to main
+  // page.
   
   if (chatId) {
     Session.set('chatId', chatId);
+
+    this.render('chat_page', {
+      to: 'main'
+    });
   }
-  
-  this.render('chat_page', {
-    to: 'main'
-  });
+  else
+    this.redirect('/');
 });

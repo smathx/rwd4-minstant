@@ -58,50 +58,26 @@ Template.chat_page.helpers({
 Template.chat_page.events({
   'submit .js-send-chat': function (event) {
     event.preventDefault();
-    
-    var chat = Chats.findOne({ _id: Session.get('chatId') });
-    
-    if (chat) {
-      chat.messages.push({
-        text: event.target.chat.value,
-        author: Meteor.userId(),
-        createdAt: new Date()
-      });
 
-      event.target.chat.value = '';
+    var message = {
+      text: event.target.chat.value,
+      author: Meteor.userId(),
+      createdAt: new Date()
+    };
 
-      Chats.update(chat._id, { $set: chat });
-    }
+    event.target.chat.value = '';
+
+    //    var chat = Chats.findOne({ _id: Session.get('chatId') });
+    //    
+    //    if (chat) {
+    //      Chats.update(chat._id, { $push: { messages: message }});
+
+    Chats.update({ _id: Session.get('chatId') }, 
+                 { $push: { messages: message } });
   }
 });
 
 //----------------------------------------------------------------------------
-
-// formatDate should convert a Date object to a reasonable date string
-// numeric day, month string, and 4 digit year. The order, language and
-// separators depend on the user locale. For example, the fifth day of the
-// twelfth month in 2015 in the locale 'en-GB' returns '5 December 2015'.
-
-Template.registerHelper('formatDate', function (datetime) {
-  // Gives a valid locale but not necessarily the right one
-  var locale = navigator.language ||      // Chrome, Firefox, IE >= 11
-               navigator.userLanguage ||  // IE <= 10
-               navigator.browserLanguage; // IE <= 10
-
-  // Should always be defined but fail gracefully if not.
-  if (!datetime)
-    return '<Date undefined>';
-
-  if (!locale)
-    return datetime.toLocaleDateString();
-
-  var options = {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric'
-  };
-  return datetime.toLocaleDateString(locale, options);
-});
 
 Template.registerHelper('getCurrentUsername', function (userId) {
   var user = Meteor.userId({ _id: userId });
@@ -113,7 +89,20 @@ Template.registerHelper('getUsername', function (userId) {
   return user ? user.username : 'Anon E Mouse';
 });
 
+// Returns the name of the avatar image file. If no user ID is supplied,
+// the current user is assumed.
+
 Template.registerHelper('getAvatar', function (userId) {
+  if (!userId)
+    userId = Meteor.userId();
+  
   var user = Meteor.users.findOne({ _id: userId });
-  return user ? '/' + user.profile.avatar : '/unknown.png';
+  
+  if (!user)
+    return '/unknown.png';
+  
+  if (!user.profile.avatar)
+    return '/default-user.png';
+  
+  return '/' + user.profile.avatar;
 });

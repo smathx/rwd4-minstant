@@ -46,13 +46,13 @@
 			{{#if isMyUser _id}}
 				<div class="bg-success">{{getUsername _id}} (YOU)
 					<br>
-					<img src="{{profile.avatar}}" class="avatar_img">
+					<img src="{{getAvatar _id}}" class="avatar_img">
 				</div>
 			{{else}}
 				<a href="/chat/{{_id}}">
 					{{getUsername _id}}
 					<br>
-					<img src="{{profile.avatar}}" class="avatar_img">
+					<img src="{{getAvatar _id}}" class="avatar_img">
 				</a> 
 			{{/if}}
 		</div>
