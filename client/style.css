@@ -5,6 +5,7 @@
 
 body {
 	padding-top: 70px;
+	padding-bottom: 70px;
 }
 
 /* Image in navvar header. */
@@ -15,7 +16,8 @@ body {
 }
 
 .user_avatar {
-	min-height: 100px;
+	width: 150px;
+	height: 150px;
 	text-align: center;
 }
 
@@ -24,7 +26,12 @@ body {
 }
 
 .avatar_img {
-	height: 75px;
+	max-height: 100px;
+	max-width: 100px;
+}
+
+xxx {
+	border: 1px dotted red;
 }
 
 /* Avatars for messages are about twice normal text height. */

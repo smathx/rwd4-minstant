@@ -5,9 +5,15 @@ Router.configure({
 });
 
 Router.route('/', function () {
-  this.render('home', {
-    to: 'main'
-  });
+  this.render('home');
+});
+
+Router.route('/about', function () {
+  this.render('about');
+});
+
+Router.route('/profile', function () {
+  this.render('profile');
 });
 
 Router.route('/chat/:_id', function () {
@@ -17,7 +23,7 @@ Router.route('/chat/:_id', function () {
   
   if (Meteor.userId()) { 
     Session.set('otherUserId', this.params._id);
-    this.render('chat_page', { to: 'main' });
+    this.render('chat_page');
   }
   else
     this.redirect('/');

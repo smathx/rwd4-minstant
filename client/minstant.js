@@ -1,5 +1,8 @@
 /* global Chats */
 
+Meteor.subscribe('Users');
+Meteor.subscribe('Chats');
+
 Template.welcome.helpers({
   statusMessage: function () {
     
@@ -17,12 +20,23 @@ Template.welcome.helpers({
       return (num == 1) ? 'is': 'are';
     }
     
-    var user_count = Meteor.users.find().count();   
-    var chat_count = Chats.find().count();   
+    Meteor.call('stats', function (error, result) {
+      console.log(result);
+      Session.set('stats', result);
+    });   
     
-    return 'There ' + are(user_count) + ' currently ' 
-      + one(user_count, 'user')
-      + ' and ' + one(chat_count, 'conversation') + '.';
+    var stats = Session.get('stats');
+    
+    if (!stats) {
+      stats = {
+        userCount: 0,
+        chatCount: 0
+      };
+    }
+    
+    return 'There ' + are(stats.userCount) + ' currently ' 
+      + one(stats.userCount, 'user')
+      + ' and ' + one(stats.chatCount, 'conversation') + '.';
   }
 });
 
@@ -74,6 +88,9 @@ Template.chat_page.events({
       Meteor.call('addMessage', chat._id, message); 
     }
   }
+});
+
+Template.profile.helpers({
 });
 
 // Returns the most recent chat between current and other user, if any.

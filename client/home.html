@@ -42,12 +42,13 @@
 
 <template name="available_user">
 	<div class="col-xs-4 col-sm-3 col-md-2">
-		<div class="user_avatar">
-			<a href="/chat/{{_id}}">
-				{{getUsername _id}}
-				<br>
-				<img src="{{getAvatar _id}}" class="avatar_img">
-			</a> 
+		<div class="thumbnail">
+  		<div class="img-responsive center-block user_avatar">
+		  	<a href="/chat/{{_id}}">
+  		  	<img src="{{getAvatar _id}}" class="avatar_img">
+			  </a> 
+			  <h4>{{getUsername _id}}</h4>
+		  </div>
 		</div>
 	</div>
 </template>
