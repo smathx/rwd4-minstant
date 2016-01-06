@@ -28,30 +28,23 @@ Template.welcome.helpers({
 
 Template.available_user_list.helpers({
   users: function () {
-    return Meteor.users.find({}, { sort: [ 'username', 'asc' ] });
-  }
-});
-
-Template.available_user.helpers({
-  isMyUser: function (userId) {
-    return userId == Meteor.userId();
+    return Meteor.users.find({
+      _id: {
+        $ne: Meteor.userId()
+      }
+    }, {
+      sort: ['username', 'asc']
+    });
   }
 });
 
 Template.chat_page.helpers({
   messages: function () {
-    console.log(Session.get('chatId'));
-    var chat = Chats.findOne({ _id: Session.get('chatId') });
-    return chat.messages;
+    var chat = getCurrentChat();
+    return chat ? chat.messages: [];
   },
   otherUser: function () {
-    var chat = Chats.findOne({ _id: Session.get('chatId') });
-    var otherUserId = chat.user1Id;
-    
-    if (otherUserId == Meteor.userId())
-      otherUserId = chat.user2Id;
-    
-    return Meteor.users.findOne({ _id: otherUserId });
+    return Meteor.users.findOne({ _id: Session.get('otherUserId') });
   }
 });
 
@@ -66,23 +59,42 @@ Template.chat_page.events({
     };
 
     event.target.chat.value = '';
+    
+    var chat = getCurrentChat();
 
-    //    var chat = Chats.findOne({ _id: Session.get('chatId') });
-    //    
-    //    if (chat) {
-    //      Chats.update(chat._id, { $push: { messages: message }});
-
-    Chats.update({ _id: Session.get('chatId') }, 
-                 { $push: { messages: message } });
+    if (!chat) {
+      Meteor.call('addChat', {
+        user1Id: Meteor.userId(),
+        user2Id: Session.get('otherUserId'),
+        messages: [ message ],
+        createdAt: new Date()
+      });
+    }
+    else {
+      Meteor.call('addMessage', chat._id, message); 
+    }
   }
 });
 
-//----------------------------------------------------------------------------
+// Returns the most recent chat between current and other user, if any.
 
-Template.registerHelper('getCurrentUsername', function (userId) {
-  var user = Meteor.userId({ _id: userId });
-  return user ? user.username : 'Anon E Mouse';
-});
+function getCurrentChat() {
+  var author = Meteor.userId();
+  var otherUserId = Session.get('otherUserId');
+
+  var filter = {
+    $or: [{
+      user1Id: author,
+      user2Id: otherUserId
+    }, {
+      user1Id: otherUserId,
+      user2Id: author
+    }]
+  };
+  return Chats.findOne(filter, { sort: ['createdAt', 'desc'] });
+}
+
+// Return username from id. This is not profile.name
 
 Template.registerHelper('getUsername', function (userId) {
   var user = Meteor.users.findOne({ _id: userId });

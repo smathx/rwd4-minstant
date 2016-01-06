@@ -19,6 +19,10 @@ body {
 	text-align: center;
 }
 
+.user_avatar:hover {
+	transform: scale(1.1, 1.1);
+}
+
 .avatar_img {
 	height: 75px;
 }
@@ -28,7 +32,8 @@ body {
 .avatar-tiny {
 	border: 0;
 	padding: 0;
-	height: 2em;
+	max-height: 2em;
+	width: 2em;
 	vertical-align: middle;
 }
 
@@ -39,7 +44,7 @@ body {
 	margin-right: 0.1em;
 	border: 0;
 	padding: 0;
-	height: 1.2em;
+	height: 1.3em;
 	vertical-align: middle;
 }
 
