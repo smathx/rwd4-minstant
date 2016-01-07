@@ -34,6 +34,17 @@ body {
 	transform: scale(1.1, 1.1);
 }
 
+.avatar-cell {
+	height: 90px;
+	width: 90px;
+	text-align: center;
+}
+
+.avatar-small {
+	max-height: 50px;
+	max-width: 50px;
+}
+
 /* Avatars for messages are about twice normal text height. */
 
 .avatar-tiny {
@@ -67,8 +78,8 @@ body {
 
 /* Can't work out how to centre checkbox vertically in row. */
 
-.checkbox > label {
-	margin-bottom: 7px;
+#username-checkbox-label {
+	margin-bottom: 5px;
 }
 
 /* Invalid URL. */

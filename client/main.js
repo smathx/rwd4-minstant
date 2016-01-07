@@ -91,8 +91,36 @@ Template.chat_page.events({
 });
 
 Template.profile.helpers({
+  avatars: function () {
+    var avatars = [];
+    
+    for (var i = 1; i <= 44; i += 1) 
+      avatars.push('avatars/ava' + (i < 10 ? '0': '') + i + '.png');
+      
+    return avatars;
+  }
 });
 
+Template.profile.events({
+  'submit .js-save-profile': function (event) {
+    event.preventDefault();
+    console.log(event.target);
+
+    if (Meteor.userId()) {
+
+      Meteor.users.update({ _id: Meteor.userId() }, 
+        {
+          $set: {
+            profile: { name: event.target.inputName.value,
+                       avatar: event.target.inputAvatar.value,
+                       useName: event.target.useName.checked },
+//            emails: [ { address: event.target.inputEmail.value }]
+          }
+        }
+      );
+    }
+  }
+});
 // Need to explicitly set focus otherwise autofocus only 
 // works on page refresh.
 
@@ -140,5 +168,5 @@ Template.registerHelper('getAvatar', function (userId) {
   if (!user.profile.avatar)
     return '/default-user.png';
   
-  return '/' + user.profile.avatar;
+  return '/avatars/' + user.profile.avatar;
 });
