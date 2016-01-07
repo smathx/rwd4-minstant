@@ -93,6 +93,13 @@ Template.chat_page.events({
 Template.profile.helpers({
 });
 
+// Need to explicitly set focus otherwise autofocus only 
+// works on page refresh.
+
+Template.profile.onRendered(function () {
+  $('[autofocus]').focus();
+});
+
 // Returns the most recent chat between current and other user, if any.
 
 function getCurrentChat() {

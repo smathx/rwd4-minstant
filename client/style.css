@@ -1,19 +1,21 @@
-/* CSS declarations go here */
+/* CSS declarations go here. */
 
-
-/* Compensate for fixed navbar at top of page */
+/* Compensate for fixed navbar at top of page. */
 
 body {
 	padding-top: 70px;
 	padding-bottom: 70px;
 }
 
-/* Image in navvar header. */
+/* Logo in navbar header. Values found by trial and error. */
 
 .navbar-image {
-	max-height: 50px;
+	max-height: 60px;
 	padding: 10px;
+	margin-right: 10px;
 }
+
+/* Avatar div must be fixed size for the Bootstrap thumbnail. */
 
 .user_avatar {
 	width: 150px;
@@ -21,17 +23,15 @@ body {
 	text-align: center;
 }
 
-.user_avatar:hover {
-	transform: scale(1.1, 1.1);
-}
-
 .avatar_img {
 	max-height: 100px;
 	max-width: 100px;
 }
 
-xxx {
-	border: 1px dotted red;
+/* Pop thumbnail on mouse hover */
+
+.user_avatar:hover {
+	transform: scale(1.1, 1.1);
 }
 
 /* Avatars for messages are about twice normal text height. */
@@ -64,3 +64,24 @@ xxx {
 .message-list li:nth-of-type(odd) {
 	background: #FFFFD0;
 }
+
+/* Can't work out how to centre checkbox vertically in row. */
+
+.checkbox > label {
+	margin-bottom: 7px;
+}
+
+/* Invalid URL. */
+
+.bad-url {
+	color: red;	
+	font-style: italic;
+}
+
+/* For testing only. */
+/*
+* {
+	border: 1px dotted red;
+}
+*/
+/*end*/
