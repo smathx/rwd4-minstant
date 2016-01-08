@@ -4,7 +4,7 @@
 
 body {
 	padding-top: 70px;
-	padding-bottom: 70px;
+	padding-bottom: 90px;
 }
 
 /* Logo in navbar header. Values found by trial and error. */
@@ -12,7 +12,6 @@ body {
 .navbar-image {
 	max-height: 60px;
 	padding: 10px;
-	margin-right: 10px;
 }
 
 /* Avatar div must be fixed size for the Bootstrap thumbnail. */
@@ -31,7 +30,7 @@ body {
 /* Pop thumbnail on mouse hover */
 
 .user_avatar:hover {
-	transform: scale(1.1, 1.1);
+	transform: scale(1.1);
 }
 
 .avatar-cell {
@@ -40,9 +39,13 @@ body {
 	text-align: center;
 }
 
-.avatar-small {
-	max-height: 50px;
-	max-width: 50px;
+.avatar-select {
+	width: 50px;
+	transition-duration: 0.4s;
+}
+
+.avatar-select:hover {
+	transform: scale(1.5);
 }
 
 /* Avatars for messages are about twice normal text height. */
@@ -53,6 +56,12 @@ body {
 	max-height: 2em;
 	width: 2em;
 	vertical-align: middle;
+}
+
+.avatar-big {
+	width: 256px;
+	border: 1px solid black;
+	border-radius: 10px;
 }
 
 /* Emoticons a bit bigger than standard text with space either side */

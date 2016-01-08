@@ -22,7 +22,7 @@
           {{#if currentUser}}
           <li>
             <a href="/profile">
-              <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Profile
+              <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Your Profile
             </a>
           </li>
           {{/if}}
@@ -33,6 +33,11 @@
           </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
+          {{#if currentUser}}
+          <li>
+            <img src="{{getAvatar}}" class="navbar-image">
+          </li>
+          {{/if}}
           {{> loginButtons align="right"}}
         </ul>
       </div>

@@ -1,4 +1,4 @@
-/* global Chats */
+/* global Avatars, Chats */
 
 Meteor.subscribe('Users');
 Meteor.subscribe('Chats');
@@ -92,12 +92,7 @@ Template.chat_page.events({
 
 Template.profile.helpers({
   avatars: function () {
-    var avatars = [];
-    
-    for (var i = 1; i <= 44; i += 1) 
-      avatars.push('avatars/ava' + (i < 10 ? '0': '') + i + '.png');
-      
-    return avatars;
+    return Avatars.find();
   }
 });
 
@@ -107,7 +102,11 @@ Template.profile.events({
     console.log(event.target);
 
     if (Meteor.userId()) {
-
+      console.log(event.target.inputName.value,
+                  event.target.inputAvatar.value,
+                  event.target.useName.checked);
+                  
+// TODO: Make this a method
       Meteor.users.update({ _id: Meteor.userId() }, 
         {
           $set: {
@@ -119,8 +118,15 @@ Template.profile.events({
         }
       );
     }
+  },
+
+  // Save the avatar ID in a hidden control.
+  
+  'click .avatar-select': function (event) {
+    $('#inputAvatar').val(event.target.dataset.avatar);
   }
 });
+
 // Need to explicitly set focus otherwise autofocus only 
 // works on page refresh.
 
@@ -161,12 +167,6 @@ Template.registerHelper('getAvatar', function (userId) {
     userId = Meteor.userId();
   
   var user = Meteor.users.findOne({ _id: userId });
-  
-  if (!user)
-    return '/unknown.png';
-  
-  if (!user.profile.avatar)
-    return '/default-user.png';
-  
-  return '/avatars/' + user.profile.avatar;
+
+  return Avatars.image(user ? user.profile.avatar: 0);
 });

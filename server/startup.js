@@ -17,12 +17,10 @@ Meteor.startup(function () {
       var username = 'user' + id;
       var email = 'user' + id + '@test.com';
       var password = 'test123';
-      var avatar = 'ava0' + id + '.png';
+      var avatar = id;
       var name = 'User ' + id;
 
-      console.log('Creating user/password ' + username + '/test123');
-
-      var password = 'test123';
+      console.log('Creating user/password ' + username + '/' + password);
 
       Accounts.createUser({
         username: username,
@@ -30,7 +28,8 @@ Meteor.startup(function () {
         password: password,
         profile: {
           name: name,
-          avatar: avatar
+          avatar: avatar,
+          useName: false
         }
       });
     }
