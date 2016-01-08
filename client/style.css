@@ -19,7 +19,12 @@ body {
 .user_avatar {
 	width: 150px;
 	height: 150px;
+	max-height: 150px;
 	text-align: center;
+	
+  overflow: hidden;
+  text-overflow: ellipsis;
+  overflow-y: hidden;
 }
 
 .avatar_img {

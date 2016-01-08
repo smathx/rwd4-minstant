@@ -39,7 +39,7 @@
 </template>
 
 <template name="available_user_list">
-	<h2>Choose someone to chat with:</h2>
+	<h2>Choose someone to chat to:</h2>
 	<div class="row">
 		{{#each users}} 
   			{{> available_user}} 
@@ -54,7 +54,7 @@
 		  	<a href="/chat/{{_id}}">
   		  	<img src="{{getAvatar _id}}" class="avatar_img">
 			  </a> 
-			  <h4>{{getUsername _id}}</h4>
+			  {{getName _id}}
 		  </div>
 		</div>
 	</div>

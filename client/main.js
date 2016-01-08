@@ -103,32 +103,29 @@ Template.profile.events({
 
     if (Meteor.userId()) {
       console.log(event.target.inputName.value,
-                  event.target.inputAvatar.value,
-                  event.target.useName.checked);
-                  
-// TODO: Make this a method
-      Meteor.users.update({ _id: Meteor.userId() }, 
-        {
-          $set: {
-            profile: { name: event.target.inputName.value,
-                       avatar: event.target.inputAvatar.value,
-                       useName: event.target.useName.checked },
-//            emails: [ { address: event.target.inputEmail.value }]
-          }
+        event.target.inputAvatar.value,
+        event.target.useName.checked,
+        event.target.inputEmail.value);
+
+      Meteor.call('updateProfile', Meteor.userId(), {
+          name: event.target.inputName.value,
+          avatar: event.target.inputAvatar.value,
+          useName: event.target.useName.checked
         }
       );
+      
+      Meteor.call('updateEmail', event.target.inputEmail.value);
     }
   },
 
   // Save the avatar ID in a hidden control.
-  
+
   'click .avatar-select': function (event) {
     $('#inputAvatar').val(event.target.dataset.avatar);
   }
 });
 
-// Need to explicitly set focus otherwise autofocus only 
-// works on page refresh.
+// Need to explicitly set focus. autofocus only works on page refresh.
 
 Template.profile.onRendered(function () {
   $('[autofocus]').focus();
@@ -152,11 +149,23 @@ function getCurrentChat() {
   return Chats.findOne(filter, { sort: ['createdAt', 'desc'] });
 }
 
-// Return username from id. This is not profile.name
+// Return name from id, either .username or .profile.name depending
+// on what's defined and user preference. If no user ID is given the 
+// current user is assumed.
 
-Template.registerHelper('getUsername', function (userId) {
+Template.registerHelper('getName', function (userId) {
+  if (!userId)
+    userId = Meteor.userId();
+    
   var user = Meteor.users.findOne({ _id: userId });
-  return user ? user.username : 'Anon E Mouse';
+
+  if (!user)  
+    return 'Anon E. Mouse';
+    
+  if (user.profile.name && user.profile.useName)
+    return user.profile.name;
+    
+  return user.username;
 });
 
 // Returns the name of the avatar image file. If no user ID is supplied,

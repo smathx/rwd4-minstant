@@ -1,5 +1,21 @@
+// Give new users a default name and avatar.
+
+Accounts.onCreateUser(function (options, user) {
+  if (!options.profile || !options.profile.name) {
+    user.profile = {
+      name: user.username,
+      avatar: null,      
+      useName: false
+    };
+  }
+  else
+    user.profile = options.profile;
+  
+  return user;
+});
+
 /* global Chats */
-/*
+
 Meteor.methods({
   addChat: function (chat) {
     Chats.insert(chat);
@@ -53,4 +69,3 @@ Meteor.methods({
     }
   }
 });
-*/
