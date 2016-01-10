@@ -17,7 +17,7 @@ Meteor.startup(function () {
       var username = 'user' + id;
       var email = 'user' + id + '@test.com';
       var password = 'test123';
-      var avatar = id;
+      var avatar = 1 + id * 5;
 
       console.log('Creating user/password ' + username + '/' + password);
 
