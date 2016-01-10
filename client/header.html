@@ -19,6 +19,13 @@
 
       <div class="collapse navbar-collapse" id="site-navbar">
         <ul class="nav navbar-nav">
+          {{#if otherUserId}}
+          <li>
+            <a href="/chat/{{otherUserId}}">
+              <span class="glyphicon glyphicon-retweet" aria-hidden="true"></span> Chat
+            </a>
+          </li>
+          {{/if}}
           {{#if currentUser}}
           <li>
             <a href="/profile">

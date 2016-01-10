@@ -1,5 +1,7 @@
 /* global Chats */
 
+// Allow anything as long as the user is signed in.
+
 Chats.allow({
   insert: function (userId, doc) {
     return !!userId;
@@ -10,11 +12,13 @@ Chats.allow({
   },
 
   remove: function (userId, doc) {
-    return false;
+    return !!userId;
   },
 
   fetch: []
 });
+
+// TODO: Isn't user data always autopublished?
 
 Meteor.publish('Users', function () {
   return Meteor.users.find();
@@ -32,3 +36,5 @@ Meteor.publish('Chats', function () {
   };
   return Chats.find(filter);
 });
+
+//end

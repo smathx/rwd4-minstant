@@ -21,7 +21,6 @@ Template.welcome.helpers({
     }
     
     Meteor.call('stats', function (error, result) {
-      console.log(result);
       Session.set('stats', result);
     });   
     
@@ -64,6 +63,9 @@ Template.chat_page.helpers({
   
   emoticonList: function () {
 
+    // This is a subset of the full list:
+    // https://github.com/dubvfan87/meteor-emoticons/blob/master/meteor-emoticons.coffee
+    
     var emoticons = [
       ':)', ':(', ':D', ':P', ':o', ':S', ':[', ';)', 'o_o', '8)'
     ];
@@ -112,53 +114,19 @@ Template.chat_page.events({
     }
   },
   
+  'click #clear': function (event) {
+    var chat = getCurrentChat();
+    
+    if (chat)
+      Meteor.call('removeChat', chat._id);
+  },
+  
   'click .emoticon-list-item': function (event) {
     var emoticon = event.currentTarget.dataset.emoticon;
     
     if (emoticon)
       $('#chat').val($('#chat').val() + ' ' + emoticon);
   }
-});
-
-Template.profile.helpers({
-  avatars: function () {
-    return Avatars.find();
-  }
-});
-
-Template.profile.events({
-  'submit .js-save-profile': function (event) {
-    event.preventDefault();
-    console.log(event.target);
-
-    if (Meteor.userId()) {
-      console.log(event.target.inputName.value,
-        event.target.inputAvatar.value,
-        event.target.useName.checked,
-        event.target.inputEmail.value);
-
-      Meteor.call('updateProfile', Meteor.userId(), {
-          name: event.target.inputName.value,
-          avatar: event.target.inputAvatar.value,
-          useName: event.target.useName.checked
-        }
-      );
-      
-      Meteor.call('updateEmail', event.target.inputEmail.value);
-    }
-  },
-
-  // Save the avatar ID in a hidden control.
-
-  'click .avatar-profile': function (event) {
-    $('#inputAvatar').val(event.target.dataset.avatar);
-  }
-});
-
-// Need to explicitly set focus. autofocus only works on page refresh.
-
-Template.profile.onRendered(function () {
-  $('[autofocus]').focus();
 });
 
 // Returns the most recent chat between current and other user, if any.
@@ -178,6 +146,15 @@ function getCurrentChat() {
   };
   return Chats.findOne(filter, { sort: ['createdAt', 'desc'] });
 }
+
+// Remove other user ID when user signs out.
+
+Template._loginButtons.events({
+  'click #login-buttons-logout': function (event) {
+    Session.set('otherUserId', undefined);
+    delete Session.keys.otherUserId;
+  }
+});
 
 // Return name from id, either .username or .profile.name depending
 // on what's defined and user preference. If no user ID is given the 
@@ -209,3 +186,11 @@ Template.registerHelper('getAvatar', function (userId) {
 
   return Avatars.image(user ? user.profile.avatar: 0);
 });
+
+// Returns the other user ID if both users are defind.
+
+Template.registerHelper('otherUserId', function () {
+  return Meteor.userId() ? Session.get('otherUserId'): undefined;
+});
+
+//end

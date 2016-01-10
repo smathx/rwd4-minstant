@@ -38,3 +38,5 @@ Meteor.methods({
     }
   }
 });
+
+//end

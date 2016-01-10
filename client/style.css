@@ -1,6 +1,6 @@
-/* CSS declarations go here. */
+/*--- Navbar styles ---*/
 
-/* Compensate for fixed navbar at top of page. */
+/* Compensate for fixed navbar at top and bottom of page. */
 
 body {
 	padding-top: 70px;
@@ -14,6 +14,9 @@ body {
 	padding: 10px;
 }
 
+
+/*--- Home/Lobby page styles ---*/
+
 /* Avatar div must be fixed size for the Bootstrap thumbnail. */
 
 .user_avatar {
@@ -22,9 +25,16 @@ body {
 	max-height: 150px;
 	text-align: center;
 	
+	/* Stop a long user name overflowing the div - doesn't work very well */
+	
   overflow: hidden;
   text-overflow: ellipsis;
-  overflow-y: hidden;
+}
+
+/* Pop thumbnail on mouse hover. */
+
+.user_avatar:hover {
+	transform: scale(1.1);
 }
 
 .avatar_img {
@@ -32,20 +42,8 @@ body {
 	max-width: 100px;
 }
 
-/* Pop thumbnail on mouse hover */
 
-.user_avatar:hover {
-	transform: scale(1.1);
-}
-
-.avatar-profile {
-	width: 50px;
-	transition-duration: 0.4s;
-}
-
-.avatar-profile:hover {
-	transform: scale(1.5);
-}
+/*--- Chat page styles ---*/
 
 /* Avatars for messages are about twice normal text height. */
 
@@ -57,13 +55,17 @@ body {
 	vertical-align: middle;
 }
 
-.avatar-big {
-	width: 256px;
-	border: 1px solid grey;
-	border-radius: 10px;
+/* Alternate message background colours. */
+
+.message-list li:nth-of-type(even) {
+	background: #D0FFD0;
 }
 
-/* Emoticons a bit bigger than standard text with space either side */
+.message-list li:nth-of-type(odd) {
+	background: #FFFFD0;
+}
+
+/* Emoticons are a bit bigger than standard text with space either side. */
 
 .meteoremoticon {
 	margin-left: 0.1em;
@@ -91,21 +93,32 @@ body {
 	border: 0;
 }
 
-/* Alternate message background colours. */
 
-.message-list li:nth-of-type(even) {
-	background: #D0FFD0;
+/*--- Profile page styles ---*/
+
+.avatar-big {
+	width: 256px;
+	border: 1px solid grey;
+	border-radius: 10px;
 }
 
-.message-list li:nth-of-type(odd) {
-	background: #FFFFD0;
+.avatar-profile {
+	width: 50px;
+	transition-duration: 0.4s;
 }
 
-/* Can't work out how to centre checkbox vertically in row. */
+.avatar-profile:hover {
+	transform: scale(1.5);
+}
+
+/* Centre checkbox vertically in row. */
 
 #username-checkbox-label {
 	margin-bottom: 5px;
 }
+
+
+/*--- 404 not found styles ---*/
 
 /* Invalid URL. */
 
@@ -114,7 +127,8 @@ body {
 	font-style: italic;
 }
 
-/* For testing only. */
+
+/*--- TEST ONLY ---*/
 /*
 * {
 	border: 1px dotted red;
