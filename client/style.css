@@ -38,18 +38,12 @@ body {
 	transform: scale(1.1);
 }
 
-.avatar-cell {
-	height: 90px;
-	width: 90px;
-	text-align: center;
-}
-
-.avatar-select {
+.avatar-profile {
 	width: 50px;
 	transition-duration: 0.4s;
 }
 
-.avatar-select:hover {
+.avatar-profile:hover {
 	transform: scale(1.5);
 }
 
@@ -65,7 +59,7 @@ body {
 
 .avatar-big {
 	width: 256px;
-	border: 1px solid black;
+	border: 1px solid grey;
 	border-radius: 10px;
 }
 
@@ -78,6 +72,23 @@ body {
 	padding: 0;
 	height: 1.3em;
 	vertical-align: middle;
+}
+
+/* Style list of emoticons on chat page. */
+
+.emoticon-list-item {
+	display: inline;
+}
+
+.emoticon-list-text {
+	margin-left: 0.6em;
+	margin-right: 0.1em;
+	font-family: "Lucida Console", Monaco, monospace;
+	background-color: #ECF0F1;
+}
+
+.emoticon-list-icon {
+	border: 0;
 }
 
 /* Alternate message background colours. */

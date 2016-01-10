@@ -57,8 +57,31 @@ Template.chat_page.helpers({
     var chat = getCurrentChat();
     return chat ? chat.messages: [];
   },
+  
   otherUser: function () {
     return Meteor.users.findOne({ _id: Session.get('otherUserId') });
+  },
+  
+  emoticonList: function () {
+
+    var emoticons = [
+      ':)', ':(', ':D', ':P', ':o', ':S', ':[', ';)', 'o_o', '8)'
+    ];
+
+    // A space must precede the emoticon or it will not be interpreted.
+
+    return emoticons.reduce(function (str, emoticon) {
+      return str +
+        '<div class="emoticon-list-item" data-emoticon="' + emoticon + '">' +
+          '<span class="emoticon-list-text">' +
+            '&#' + emoticon.charCodeAt(0) + ';' + emoticon.substr(1) +
+          '</span>' + 
+          '<span class="emoticon-list-icon">' + 
+            ' ' + emoticon +
+          '</span>' +
+        '</div>';
+      }, 
+      '');
   }
 });
 
@@ -87,6 +110,13 @@ Template.chat_page.events({
     else {
       Meteor.call('addMessage', chat._id, message); 
     }
+  },
+  
+  'click .emoticon-list-item': function (event) {
+    var emoticon = event.currentTarget.dataset.emoticon;
+    
+    if (emoticon)
+      $('#chat').val($('#chat').val() + ' ' + emoticon);
   }
 });
 
@@ -120,7 +150,7 @@ Template.profile.events({
 
   // Save the avatar ID in a hidden control.
 
-  'click .avatar-select': function (event) {
+  'click .avatar-profile': function (event) {
     $('#inputAvatar').val(event.target.dataset.avatar);
   }
 });

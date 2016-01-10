@@ -30,15 +30,13 @@
         
         <div class="form-group">
           <label for="inputName" class="col-sm-2 control-label">Alias:</label>
-          <div class="col-sm-9">
+          <div class="col-sm-5">
             <input type="text" class="form-control" id="inputName" 
               value="{{currentUser.profile.name}}" 
               placeholder="Alias (optional)" autofocus>
           </div>
-        </div>
-        
-        <div class="form-group">
-          <div class="col-sm-offset-2 col-sm-9">
+          
+          <div class="col-sm-5">
             <div class="checkbox">
               <label id="username-checkbox-label">
                 {{#if currentUser.profile.useName}}
@@ -68,7 +66,7 @@
               {{#each avatar in avatars}}
               	<div class="col-xs-3 col-sm-2">
                   <div class="thumbnail">
-                    <img src="{{avatar.image}}" class="avatar-select" 
+                    <img src="{{avatar.image}}" class="avatar-profile" 
                       data-avatar="{{avatar._id}}">
                   </div>
                 </div>

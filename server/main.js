@@ -14,55 +14,24 @@ Accounts.onCreateUser(function (options, user) {
   return user;
 });
 
-/* global Chats */
+// These methods must be on the server. They invoke functions that
+// do not run on the client.
 
 Meteor.methods({
-  addChat: function (chat) {
-    Chats.insert(chat);
-  },
-
-  addMessage: function (chatId, message) {
-    Chats.update({
-      _id: chatId
-    }, {
-      $push: {
-        messages: message
-      }
-    });
-  },
-
-  stats: function () {
-    return {
-      userCount: Meteor.users.find().count(),
-      chatCount: Chats.find().count()
-        // TODO: Count signed in users      
-        //    signedInCount: ????
-    };
-  },
-
-  updateProfile: function (userId, profile) {
-    Meteor.users.update({
-      _id: userId
-    }, {
-      $set: {
-        profile: profile
-      }
-    });
-  },
-  
   updateEmail: function (newEmail) {  
     var user = Meteor.user();
     
     if (user) {
-      var oldEmail = null;
+      var oldEmail;
     
       if (user.emails) {
-        oldEmail = user.emails[0].address;
+        if (user.emails.length > 0) {
+          oldEmail = user.emails[0].address;
         
-        if (newEmail)    
-          if (newEmail.toLowerCase() !== oldEmail.toLowerCase()) 
+          if (!newEmail || (newEmail.toLowerCase() !== oldEmail.toLowerCase())) 
             Accounts.removeEmail(user._id, oldEmail);
-
+        }
+        
         if (newEmail)
           Accounts.addEmail(user._id, newEmail);
       }
